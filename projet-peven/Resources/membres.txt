@@ -1,0 +1,5 @@
+Nom,Prenom,CIN,Telephone,DateNaissance,Adresse,Statut
+Ben Ahmed,Mohamed,12345678,98765432,15/03/1990,Tunis,Actif
+Trabelsi,Fatma,87654321,99123456,22/07/1995,Ariana,Actif
+Mansouri,Ahmed,11223344,23456789,10/12/1988,Sfax,Inactif
+Nafti,Salim,15035630,50301923,07/07/2006,Tunis,Actif
