@@ -4,6 +4,11 @@
         Abonnes.ShowDialog()
     End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim Personnel As New Personnel()
+        Personnel.ShowDialog()
+    End Sub
+
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
     End Sub

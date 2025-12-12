@@ -1,0 +1,6 @@
+ID,Nom,Prenom,Poste,Date d'Embauche,Salaire,Statut
+1,Martin,Sophie,Coach Fitness,2023-01-15,2500,Actif
+2,Dubois,Thomas,Receptionniste,2023-03-20,1800,Actif
+3,Laurent,Marie,Nutritionniste,2022-11-10,2200,Actif
+4,Bernard,Lucas,Coach Musculation,2023-05-05,2600,Inactif
+5,Petit,Emma,Responsable,2021-08-12,3500,Actif

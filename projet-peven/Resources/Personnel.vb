@@ -1,7 +1,7 @@
-ï»¿Imports System.IO
+Imports System.IO
 
-Public Class Abonnes
-    Private ReadOnly filePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "membres.txt")
+Public Class Personnel
+    Private ReadOnly filePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "personnel.txt")
 
     Private Function IsValidDate(dateString As String) As Boolean
         ' Check format jj/mm/aaaa
@@ -63,7 +63,7 @@ Public Class Abonnes
         Return True
     End Function
 
-    Private Sub Abonnes_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Personnel_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Load
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         DataGridView1.MultiSelect = False
         Try
@@ -166,7 +166,7 @@ Public Class Abonnes
                 Dim isValid As Boolean = False
 
                 ' Check if it's a date column
-                Dim isDateColumn As Boolean = column.ColumnName.ToLower().Contains("date") OrElse column.ColumnName.ToLower().Contains("inscription") OrElse column.ColumnName.ToLower().Contains("naissance")
+                Dim isDateColumn As Boolean = column.ColumnName.ToLower().Contains("date") OrElse column.ColumnName.ToLower().Contains("embauche")
                 
                 ' Check if it's a CIN or Telephone column
                 Dim is8DigitsColumn As Boolean = column.ColumnName.ToLower().Contains("cin") OrElse column.ColumnName.ToLower().Contains("telephone") OrElse column.ColumnName.ToLower().Contains("tel")
@@ -179,11 +179,11 @@ Public Class Abonnes
                         prompt &= vbCrLf & "(8 chiffres exactement)"
                     End If
                     
-                    input = InputBox(prompt, "Nouvel AdhÃ©rent")
+                    input = InputBox(prompt, "Nouveau Personnel")
 
                     ' If user cancels, exit
                     If String.IsNullOrEmpty(input) Then
-                        MessageBox.Show("Ajout annulÃ©!")
+                        MessageBox.Show("Ajout annulé!")
                         Return
                     End If
 
@@ -214,7 +214,7 @@ Public Class Abonnes
             ' Save to file
             SaveDataToFile(dt)
 
-            MessageBox.Show("AdhÃ©rent ajoutÃ© avec succÃ¨s!")
+            MessageBox.Show("Personnel ajouté avec succès!")
 
             ' Refresh the formatting
             DataGridView1.Refresh()
@@ -225,29 +225,9 @@ Public Class Abonnes
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Try
-            Dim lines As New List(Of String)
             Dim dt As DataTable = CType(DataGridView1.DataSource, DataTable)
-
-            ' Add header row
-            Dim headers As New List(Of String)
-            For Each column As DataColumn In dt.Columns
-                headers.Add(column.ColumnName)
-            Next
-            lines.Add(String.Join(",", headers))
-
-            ' Add data rows
-            For Each row As DataRow In dt.Rows
-                Dim values As New List(Of String)
-                For Each item In row.ItemArray
-                    values.Add(item.ToString())
-                Next
-                lines.Add(String.Join(",", values))
-            Next
-
-            ' Write to file
-            IO.File.WriteAllLines(filePath, lines)
-
-            MessageBox.Show("Modifications enregistrÃ©es avec succÃ¨s!")
+            SaveDataToFile(dt)
+            MessageBox.Show("Modifications enregistrées avec succès!")
         Catch ex As Exception
             MessageBox.Show("Erreur lors de l'enregistrement : " & ex.Message)
         End Try
@@ -256,7 +236,7 @@ Public Class Abonnes
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         ' Actif button
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("Selectionnez l'adherent Ã  modifier")
+            MessageBox.Show("Selectionnez le personnel à modifier")
             Return
         End If
 
@@ -283,7 +263,7 @@ Public Class Abonnes
                 ' Refresh the display to update colors
                 DataGridView1.Refresh()
 
-                MessageBox.Show("Statut changÃ© Ã  Actif!")
+                MessageBox.Show("Statut changé à Actif!")
             Else
                 MessageBox.Show("Colonne Statut introuvable!")
             End If
@@ -295,7 +275,7 @@ Public Class Abonnes
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         ' Inactif button
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("Selectionnez l'adherent Ã  modifier")
+            MessageBox.Show("Selectionnez le personnel à modifier")
             Return
         End If
 
@@ -322,7 +302,7 @@ Public Class Abonnes
                 ' Refresh the display to update colors
                 DataGridView1.Refresh()
 
-                MessageBox.Show("Statut changÃ© Ã  Inactif!")
+                MessageBox.Show("Statut changé à Inactif!")
             Else
                 MessageBox.Show("Colonne Statut introuvable!")
             End If
@@ -356,7 +336,7 @@ Public Class Abonnes
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("Selectionnez l'adherent a supprimer")
+            MessageBox.Show("Selectionnez le personnel à supprimer")
             Return
         End If
 
@@ -378,7 +358,7 @@ Public Class Abonnes
             ' Remove row from the DataGridView
             DataGridView1.Rows.Remove(DataGridView1.SelectedRows(0))
 
-            MessageBox.Show("Adherent supprime !")
+            MessageBox.Show("Personnel supprimé !")
         Catch ex As Exception
             MessageBox.Show("Erreur : " & ex.Message)
         End Try
