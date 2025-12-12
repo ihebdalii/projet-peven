@@ -38,9 +38,10 @@ Partial Class Abonnes
         Label1.BackColor = Color.Transparent
         Label1.Font = New Font("Bahnschrift Condensed", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = Color.Gold
-        Label1.Location = New Point(553, 39)
+        Label1.Location = New Point(298, 18)
+        Label1.Margin = New Padding(2, 0, 2, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(704, 115)
+        Label1.Size = New Size(352, 58)
         Label1.TabIndex = 2
         Label1.Text = "Gestion des Abonnés"
         Label1.TextAlign = ContentAlignment.TopCenter
@@ -49,42 +50,43 @@ Partial Class Abonnes
         ' 
         Button2.BackColor = Color.Transparent
         Button2.FlatAppearance.BorderColor = Color.Gold
-        Button2.FlatAppearance.BorderSize = 5
         Button2.FlatAppearance.MouseDownBackColor = Color.Transparent
         Button2.FlatAppearance.MouseOverBackColor = Color.Transparent
         Button2.FlatStyle = FlatStyle.Flat
         Button2.Font = New Font("Bahnschrift", 10.875F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Button2.ForeColor = Color.Snow
-        Button2.Location = New Point(310, 157)
+        Button2.Location = New Point(167, 74)
+        Button2.Margin = New Padding(2, 1, 2, 1)
         Button2.Name = "Button2"
-        Button2.Size = New Size(355, 94)
+        Button2.Size = New Size(191, 44)
         Button2.TabIndex = 5
-        Button2.Text = "Ajout d'un nouvel adhérent"
+        Button2.Text = "Ajout d'adhérent"
         Button2.UseVisualStyleBackColor = False
         ' 
         ' DataGridView1
         ' 
         DataGridView1.BackgroundColor = SystemColors.ActiveCaptionText
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(86, 289)
+        DataGridView1.Location = New Point(46, 135)
+        DataGridView1.Margin = New Padding(2, 1, 2, 1)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.RowHeadersWidth = 82
-        DataGridView1.Size = New Size(1622, 451)
+        DataGridView1.Size = New Size(873, 211)
         DataGridView1.TabIndex = 6
         ' 
         ' Button1
         ' 
         Button1.BackColor = Color.Transparent
         Button1.FlatAppearance.BorderColor = Color.Gold
-        Button1.FlatAppearance.BorderSize = 5
         Button1.FlatAppearance.MouseDownBackColor = Color.Transparent
         Button1.FlatAppearance.MouseOverBackColor = Color.Transparent
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Bahnschrift", 10.875F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Button1.ForeColor = Color.Snow
-        Button1.Location = New Point(745, 157)
+        Button1.Location = New Point(401, 74)
+        Button1.Margin = New Padding(2, 1, 2, 1)
         Button1.Name = "Button1"
-        Button1.Size = New Size(355, 94)
+        Button1.Size = New Size(191, 44)
         Button1.TabIndex = 7
         Button1.Text = "Supprimer l'adhérent"
         Button1.UseVisualStyleBackColor = False
@@ -93,15 +95,15 @@ Partial Class Abonnes
         ' 
         Button3.BackColor = Color.Transparent
         Button3.FlatAppearance.BorderColor = Color.Gold
-        Button3.FlatAppearance.BorderSize = 5
         Button3.FlatAppearance.MouseDownBackColor = Color.Transparent
         Button3.FlatAppearance.MouseOverBackColor = Color.Transparent
         Button3.FlatStyle = FlatStyle.Flat
         Button3.Font = New Font("Bahnschrift", 10.875F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Button3.ForeColor = Color.Snow
-        Button3.Location = New Point(1175, 157)
+        Button3.Location = New Point(633, 74)
+        Button3.Margin = New Padding(2, 1, 2, 1)
         Button3.Name = "Button3"
-        Button3.Size = New Size(355, 94)
+        Button3.Size = New Size(191, 44)
         Button3.TabIndex = 8
         Button3.Text = "Modifer l'adhérent"
         Button3.UseVisualStyleBackColor = False
@@ -110,15 +112,15 @@ Partial Class Abonnes
         ' 
         Button4.BackColor = Color.Transparent
         Button4.FlatAppearance.BorderColor = Color.Gold
-        Button4.FlatAppearance.BorderSize = 5
         Button4.FlatAppearance.MouseDownBackColor = Color.Transparent
         Button4.FlatAppearance.MouseOverBackColor = Color.Transparent
         Button4.FlatStyle = FlatStyle.Flat
         Button4.Font = New Font("Bahnschrift", 10.875F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Button4.ForeColor = Color.Snow
-        Button4.Location = New Point(504, 763)
+        Button4.Location = New Point(271, 358)
+        Button4.Margin = New Padding(2, 1, 2, 1)
         Button4.Name = "Button4"
-        Button4.Size = New Size(355, 94)
+        Button4.Size = New Size(191, 44)
         Button4.TabIndex = 9
         Button4.Text = "Actif"
         Button4.UseVisualStyleBackColor = False
@@ -127,25 +129,25 @@ Partial Class Abonnes
         ' 
         Button5.BackColor = Color.Transparent
         Button5.FlatAppearance.BorderColor = Color.Gold
-        Button5.FlatAppearance.BorderSize = 5
         Button5.FlatAppearance.MouseDownBackColor = Color.Transparent
         Button5.FlatAppearance.MouseOverBackColor = Color.Transparent
         Button5.FlatStyle = FlatStyle.Flat
         Button5.Font = New Font("Bahnschrift", 10.875F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Button5.ForeColor = Color.Snow
-        Button5.Location = New Point(929, 763)
+        Button5.Location = New Point(500, 358)
+        Button5.Margin = New Padding(2, 1, 2, 1)
         Button5.Name = "Button5"
-        Button5.Size = New Size(355, 94)
+        Button5.Size = New Size(191, 44)
         Button5.TabIndex = 10
         Button5.Text = "Inactif"
         Button5.UseVisualStyleBackColor = False
         ' 
         ' Abonnes
         ' 
-        AutoScaleDimensions = New SizeF(13F, 32F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources._834264
-        ClientSize = New Size(1796, 891)
+        ClientSize = New Size(967, 418)
         Controls.Add(Button5)
         Controls.Add(Button4)
         Controls.Add(Button3)
@@ -153,6 +155,7 @@ Partial Class Abonnes
         Controls.Add(DataGridView1)
         Controls.Add(Button2)
         Controls.Add(Label1)
+        Margin = New Padding(2, 1, 2, 1)
         Name = "Abonnes"
         Text = "Abonnes"
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
