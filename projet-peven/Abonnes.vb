@@ -167,7 +167,7 @@ Public Class Abonnes
 
                 ' Check if it's a date column
                 Dim isDateColumn As Boolean = column.ColumnName.ToLower().Contains("date") OrElse column.ColumnName.ToLower().Contains("inscription") OrElse column.ColumnName.ToLower().Contains("naissance")
-                
+
                 ' Check if it's a CIN or Telephone column
                 Dim is8DigitsColumn As Boolean = column.ColumnName.ToLower().Contains("cin") OrElse column.ColumnName.ToLower().Contains("telephone") OrElse column.ColumnName.ToLower().Contains("tel")
 
@@ -178,7 +178,7 @@ Public Class Abonnes
                     ElseIf is8DigitsColumn Then
                         prompt &= vbCrLf & "(8 chiffres exactement)"
                     End If
-                    
+
                     input = InputBox(prompt, "Nouvel Adhérent")
 
                     ' If user cancels, exit

@@ -147,6 +147,7 @@ Partial Class Abonnes
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources._834264
+        BackgroundImageLayout = ImageLayout.Zoom
         ClientSize = New Size(967, 418)
         Controls.Add(Button5)
         Controls.Add(Button4)

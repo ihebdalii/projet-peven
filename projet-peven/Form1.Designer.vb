@@ -123,6 +123,7 @@ Partial Class Form1
         ' Button3
         ' 
         Button3.BackColor = Color.Transparent
+        Button3.BackgroundImageLayout = ImageLayout.Zoom
         Button3.FlatAppearance.BorderColor = Color.Gold
         Button3.FlatAppearance.MouseDownBackColor = Color.Transparent
         Button3.FlatAppearance.MouseOverBackColor = Color.Transparent

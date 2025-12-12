@@ -9,7 +9,9 @@
         Personnel.ShowDialog()
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim Planning As New Planning()
+        Planning.ShowDialog()
     End Sub
 End Class
