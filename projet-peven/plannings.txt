@@ -1,8 +1,9 @@
 Jour,Horaire,Activite,Coach,Duree,Capacite,Inscrits,Statut
-Lundi,08:00-09:00,Yoga,Sophie Martin,60,20,15,Ouvert
-Lundi,10:00-11:00,Musculation,Lucas Bernard,60,15,15,Complet
-Mardi,09:00-10:00,Cardio,Sophie Martin,45,25,18,Ouvert
-Mercredi,18:00-19:00,CrossFit,Lucas Bernard,60,12,10,Ouvert
-Jeudi,07:00-08:00,Pilates,Sophie Martin,60,15,12,Ouvert
-Vendredi,19:00-20:00,Boxing,Thomas Dubois,60,20,5,Ouvert
-Samedi,10:00-11:30,Zumba,Emma Petit,90,30,28,Ouvert
+Lundi,08:00-09:00,Yoga,Fatma Agrebaoui,60,20,15,Ouvert
+Lundi,10:00-11:00,Musculation,Yassine Farfouri,60,15,15,Complet
+Mardi,09:00-10:00,Cardio,Fatma Agrebaoui,45,25,18,Ouvert
+Mercredi,18:00-19:00,CrossFit,Yassine Farfouri,60,12,10,Ouvert
+Jeudi,07:00-08:00,Pilates,Fatma Agrebaoui,60,15,12,Ouvert
+Vendredi,19:00-20:00,Boxing,Yassine Farfouri,60,20,5,Ouvert
+Samedi,10:00-11:30,Zumba,Fatma Agrebaoui,90,30,28,Ouvert
+Dimanche,09:00-10:00,Nutrition,Foued Lahga,60,15,8,Ouvert
