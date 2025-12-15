@@ -1,0 +1,11 @@
+Membre,TypeAbonnement,DateDebut,DateFin,Montant,DatePaiement,ModePaiement,Statut
+Mohamed Ben Ahmed,Annuel,01/01/2024,31/12/2024,600,01/01/2024,Carte,Paye
+Fatma Trabelsi,Mensuel,01/12/2024,31/12/2024,60,01/12/2024,Espèces,Paye
+Ahmed Mansouri,Trimestriel,01/10/2024,31/12/2024,150,01/10/2024,Virement,Paye
+Salim Nafti,Annuel,15/11/2024,14/11/2025,800,15/11/2024,Carte,Paye
+Leila Khouja,Mensuel,01/11/2024,30/11/2024,60,05/11/2024,Espèces,Expire
+Karim Hamdi,Annuel,01/03/2024,28/02/2025,600,01/03/2024,Chèque,Paye
+Sonia Gharbi,Mensuel,01/12/2024,31/12/2024,60,,Espèces,Impaye
+Youssef Mejri,Trimestriel,01/09/2024,30/11/2024,150,01/09/2024,Carte,Expire
+Amira Sassi,Annuel,20/10/2024,19/10/2025,800,20/10/2024,Virement,Paye
+Hedi Bouaziz,Mensuel,15/12/2024,14/01/2025,60,15/12/2024,Espèces,Paye

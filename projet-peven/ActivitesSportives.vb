@@ -1,34 +1,34 @@
-ÔªøImports System.IO
+Imports System.IO
 
-Public Class Planning
-    Private ReadOnly filePath As String = Path.Combine(Application.StartupPath, "..", "..", "..", "plannings.txt")
+Public Class ActivitesSportives
+    Private ReadOnly filePath As String = Path.Combine(Application.StartupPath, "..", "..", "..", "activites.txt")
 
-    Private Sub Planning_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub ActivitesSportives_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         DataGridView1.MultiSelect = False
 
         ' Create file if it doesn't exist
         If Not File.Exists(filePath) Then
-            CreateDefaultPlanningFile()
+            CreateDefaultActivitesFile()
         End If
 
-        LoadPlanningData()
+        LoadActivitesData()
     End Sub
 
-    Private Sub CreateDefaultPlanningFile()
+    Private Sub CreateDefaultActivitesFile()
         Dim defaultContent As New List(Of String) From {
-            "Jour,Horaire,Activite,Coach,Duree,Capacite,Inscrits,Statut"
+            "Nom,Type,Description,Duree,Niveau,Prix,Equipement,Statut"
         }
         File.WriteAllLines(filePath, defaultContent)
     End Sub
 
-    Private Sub LoadPlanningData()
+    Private Sub LoadActivitesData()
         Try
             Dim dt As New DataTable()
             Dim lines() As String = File.ReadAllLines(filePath)
 
             If lines.Length = 0 Then
-                MessageBox.Show("Le fichier plannings est vide!")
+                MessageBox.Show("Le fichier activitÈs est vide!")
                 Return
             End If
 
@@ -83,51 +83,33 @@ Public Class Planning
             ' Color code status
             If columnName = "statut" AndAlso e.Value IsNot Nothing Then
                 Dim statut As String = e.Value.ToString().Trim().ToLower()
-                If statut = "ouvert" Then
+                If statut = "disponible" Then
                     e.CellStyle.BackColor = Color.FromArgb(34, 139, 34)
                     e.CellStyle.ForeColor = Color.White
                     e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
-                ElseIf statut = "complet" Then
-                    e.CellStyle.BackColor = Color.FromArgb(255, 140, 0)
-                    e.CellStyle.ForeColor = Color.White
-                    e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
-                ElseIf statut = "annule" Then
+                ElseIf statut = "indisponible" Then
                     e.CellStyle.BackColor = Color.FromArgb(220, 20, 60)
                     e.CellStyle.ForeColor = Color.White
                     e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
                 End If
             End If
 
-            ' Highlight capacity warnings
-            If DataGridView1.Rows(e.RowIndex).Cells.Count > 0 Then
-                Dim capaciteCol As Integer = -1
-                Dim inscritsCol As Integer = -1
-
-                For i As Integer = 0 To DataGridView1.Columns.Count - 1
-                    If DataGridView1.Columns(i).HeaderText.ToLower() = "capacite" Then capaciteCol = i
-                    If DataGridView1.Columns(i).HeaderText.ToLower() = "inscrits" Then inscritsCol = i
-                Next
-
-                If capaciteCol >= 0 AndAlso inscritsCol >= 0 Then
-                    Dim capaciteVal = DataGridView1.Rows(e.RowIndex).Cells(capaciteCol).Value
-                    Dim inscritsVal = DataGridView1.Rows(e.RowIndex).Cells(inscritsCol).Value
-
-                    If capaciteVal IsNot Nothing AndAlso inscritsVal IsNot Nothing Then
-                        Dim capacite As Integer
-                        Dim inscrits As Integer
-                        If Integer.TryParse(capaciteVal.ToString(), capacite) AndAlso Integer.TryParse(inscritsVal.ToString(), inscrits) Then
-                            If inscrits >= capacite AndAlso (columnName = "inscrits" OrElse columnName = "capacite") Then
-                                e.CellStyle.BackColor = Color.FromArgb(255, 69, 0)
-                            End If
-                        End If
-                    End If
+            ' Color code niveau (difficulty level)
+            If columnName = "niveau" AndAlso e.Value IsNot Nothing Then
+                Dim niveau As String = e.Value.ToString().Trim().ToLower()
+                If niveau = "debutant" Then
+                    e.CellStyle.ForeColor = Color.LightGreen
+                ElseIf niveau = "intermediaire" Then
+                    e.CellStyle.ForeColor = Color.Orange
+                ElseIf niveau = "avance" Then
+                    e.CellStyle.ForeColor = Color.Red
                 End If
             End If
         End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        ' Add new planning
+        ' Add new activity
         Try
             Dim dt As DataTable = CType(DataGridView1.DataSource, DataTable)
             Dim newValues As New List(Of String)
@@ -137,24 +119,28 @@ Public Class Planning
                 Dim prompt As String = $"Entrez {column.ColumnName}:"
 
                 Select Case column.ColumnName.ToLower()
-                    Case "jour"
-                        prompt &= vbCrLf & "(Ex: Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche)"
-                    Case "horaire"
-                        prompt &= vbCrLf & "(Ex: 08:00-09:00)"
-                    Case "activite"
-                        prompt &= vbCrLf & "(Ex: Yoga, Musculation, Cardio, CrossFit, Pilates)"
+                    Case "nom"
+                        prompt &= vbCrLf & "(Ex: Yoga, Musculation, Cardio)"
+                    Case "type"
+                        prompt &= vbCrLf & "(Ex: Cours collectif, Individuel, Fitness)"
+                    Case "description"
+                        prompt &= vbCrLf & "(BrËve description de l'activitÈ)"
                     Case "duree"
                         prompt &= vbCrLf & "(En minutes, ex: 60)"
-                    Case "capacite", "inscrits"
-                        prompt &= vbCrLf & "(Nombre de personnes)"
+                    Case "niveau"
+                        prompt &= vbCrLf & "(Debutant/Intermediaire/Avance)"
+                    Case "prix"
+                        prompt &= vbCrLf & "(Prix par sÈance en DT)"
+                    Case "equipement"
+                        prompt &= vbCrLf & "(Ex: Tapis, Poids, Aucun)"
                     Case "statut"
-                        prompt &= vbCrLf & "(Ouvert/Complet/Annule)"
+                        prompt &= vbCrLf & "(Disponible/Indisponible)"
                 End Select
 
-                input = InputBox(prompt, "Nouveau Planning")
+                input = InputBox(prompt, "Nouvelle ActivitÈ")
 
                 If String.IsNullOrEmpty(input) Then
-                    MessageBox.Show("Ajout annul√©!")
+                    MessageBox.Show("Ajout annulÈ!")
                     Return
                 End If
 
@@ -163,7 +149,7 @@ Public Class Planning
 
             dt.Rows.Add(newValues.ToArray())
             SaveDataToFile(dt)
-            MessageBox.Show("Planning ajout√© avec succ√®s!")
+            MessageBox.Show("ActivitÈ ajoutÈe avec succËs!")
             DataGridView1.Refresh()
 
         Catch ex As Exception
@@ -172,13 +158,13 @@ Public Class Planning
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        ' Delete planning
+        ' Delete activity
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("S√©lectionnez le planning √† supprimer")
+            MessageBox.Show("SÈlectionnez l'activitÈ ‡ supprimer")
             Return
         End If
 
-        Dim result As DialogResult = MessageBox.Show("√ätes-vous s√ªr de vouloir supprimer ce planning?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim result As DialogResult = MessageBox.Show(" tes-vous s˚r de vouloir supprimer cette activitÈ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
             Try
@@ -186,7 +172,7 @@ Public Class Planning
                 Dim selectedIndex As Integer = DataGridView1.SelectedRows(0).Index
                 dt.Rows(selectedIndex).Delete()
                 SaveDataToFile(dt)
-                MessageBox.Show("Planning supprim√©!")
+                MessageBox.Show("ActivitÈ supprimÈe!")
             Catch ex As Exception
                 MessageBox.Show("Erreur : " & ex.Message)
             End Try
@@ -198,16 +184,16 @@ Public Class Planning
         Try
             Dim dt As DataTable = CType(DataGridView1.DataSource, DataTable)
             SaveDataToFile(dt)
-            MessageBox.Show("Modifications enregistr√©es avec succ√®s!")
+            MessageBox.Show("Modifications enregistrÈes avec succËs!")
         Catch ex As Exception
             MessageBox.Show("Erreur lors de l'enregistrement : " & ex.Message)
         End Try
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        ' Ouvert button - Change status to Ouvert
+        ' Disponible button - Change status to Disponible
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("S√©lectionnez le planning √† modifier")
+            MessageBox.Show("SÈlectionnez l'activitÈ ‡ modifier")
             Return
         End If
 
@@ -225,8 +211,8 @@ Public Class Planning
             Next
 
             If statutColumnIndex >= 0 Then
-                ' Change status to Ouvert
-                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Ouvert"
+                ' Change status to Disponible
+                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Disponible"
 
                 ' Save to file
                 SaveDataToFile(dt)
@@ -234,7 +220,7 @@ Public Class Planning
                 ' Refresh the display to update colors
                 DataGridView1.Refresh()
 
-                MessageBox.Show("Statut chang√© √† Ouvert!")
+                MessageBox.Show("Statut changÈ ‡ Disponible!")
             Else
                 MessageBox.Show("Colonne Statut introuvable!")
             End If
@@ -244,9 +230,9 @@ Public Class Planning
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        ' Annul√© button - Change status to Annul√©
+        ' Indisponible button - Change status to Indisponible
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("S√©lectionnez le planning √† modifier")
+            MessageBox.Show("SÈlectionnez l'activitÈ ‡ modifier")
             Return
         End If
 
@@ -264,8 +250,8 @@ Public Class Planning
             Next
 
             If statutColumnIndex >= 0 Then
-                ' Change status to Annul√©
-                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Annule"
+                ' Change status to Indisponible
+                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Indisponible"
 
                 ' Save to file
                 SaveDataToFile(dt)
@@ -273,7 +259,7 @@ Public Class Planning
                 ' Refresh the display to update colors
                 DataGridView1.Refresh()
 
-                MessageBox.Show("Statut chang√© √† Annul√©!")
+                MessageBox.Show("Statut changÈ ‡ Indisponible!")
             Else
                 MessageBox.Show("Colonne Statut introuvable!")
             End If

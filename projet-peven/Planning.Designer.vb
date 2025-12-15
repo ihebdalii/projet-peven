@@ -36,9 +36,9 @@ Partial Class Planning
         ' 
         Label1.AutoSize = True
         Label1.BackColor = Color.Transparent
-        Label1.Font = New Font("Bahnschrift Condensed", 36.0F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label1.Font = New Font("Bahnschrift Condensed", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = Color.Gold
-        Label1.Location = New Point(265, 18)
+        Label1.Location = New Point(315, 9)
         Label1.Margin = New Padding(2, 0, 2, 0)
         Label1.Name = "Label1"
         Label1.Size = New Size(376, 58)
@@ -147,6 +147,7 @@ Partial Class Planning
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources._834264
+        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(967, 418)
         Controls.Add(Button5)
         Controls.Add(Button4)

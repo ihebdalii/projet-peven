@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Personnel
+Partial Class AbonnementsPaiements
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -38,12 +38,12 @@ Partial Class Personnel
         Label1.BackColor = Color.Transparent
         Label1.Font = New Font("Bahnschrift Condensed", 36.0F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = Color.Gold
-        Label1.Location = New Point(331, 9)
+        Label1.Location = New Point(200, 18)
         Label1.Margin = New Padding(2, 0, 2, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(360, 58)
+        Label1.Size = New Size(512, 58)
         Label1.TabIndex = 2
-        Label1.Text = "Gestion du Personnel"
+        Label1.Text = "Abonnements et Paiements"
         Label1.TextAlign = ContentAlignment.TopCenter
         ' 
         ' Button2
@@ -60,7 +60,7 @@ Partial Class Personnel
         Button2.Name = "Button2"
         Button2.Size = New Size(191, 44)
         Button2.TabIndex = 5
-        Button2.Text = "Ajout de personnel"
+        Button2.Text = "Ajouter Abonnement"
         Button2.UseVisualStyleBackColor = False
         ' 
         ' DataGridView1
@@ -122,7 +122,7 @@ Partial Class Personnel
         Button4.Name = "Button4"
         Button4.Size = New Size(191, 44)
         Button4.TabIndex = 9
-        Button4.Text = "Actif"
+        Button4.Text = "Payé"
         Button4.UseVisualStyleBackColor = False
         ' 
         ' Button5
@@ -139,10 +139,10 @@ Partial Class Personnel
         Button5.Name = "Button5"
         Button5.Size = New Size(191, 44)
         Button5.TabIndex = 10
-        Button5.Text = "Inactif"
+        Button5.Text = "Impayé"
         Button5.UseVisualStyleBackColor = False
         ' 
-        ' Personnel
+        ' AbonnementsPaiements
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
@@ -157,8 +157,8 @@ Partial Class Personnel
         Controls.Add(Button2)
         Controls.Add(Label1)
         Margin = New Padding(2, 1, 2, 1)
-        Name = "Personnel"
-        Text = "Personnel"
+        Name = "AbonnementsPaiements"
+        Text = "Abonnements et Paiements"
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()

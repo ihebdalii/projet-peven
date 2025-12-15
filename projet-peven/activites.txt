@@ -1,0 +1,10 @@
+Nom,Type,Description,Duree,Niveau,Prix,Equipement,Statut
+Yoga,Cours collectif,Relaxation et flexibilité,60,Debutant,15,Tapis,Disponible
+Musculation,Individuel,Renforcement musculaire,90,Intermediaire,20,Poids et machines,Disponible
+Cardio,Cours collectif,Amélioration cardiovasculaire,45,Debutant,12,Tapis de course,Disponible
+CrossFit,Cours collectif,Entraînement intensif,60,Avance,25,Variés,Disponible
+Pilates,Cours collectif,Renforcement du core,60,Intermediaire,18,Tapis et ballons,Disponible
+Boxing,Individuel,Sport de combat,60,Intermediaire,22,Gants et sac,Disponible
+Zumba,Cours collectif,Danse fitness,60,Debutant,15,Aucun,Disponible
+Spinning,Cours collectif,Vélo intensif,45,Intermediaire,16,Vélo spinning,Disponible
+Natation,Individuel,Endurance aquatique,60,Debutant,20,Piscine,Indisponible

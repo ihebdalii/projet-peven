@@ -1,7 +1,7 @@
 Imports System.IO
 
 Public Class Personnel
-    Private ReadOnly filePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "personnel.txt")
+    Private ReadOnly filePath As String = Path.Combine(Application.StartupPath, "..", "..", "..", "personnel.txt")
 
     Private Function IsValidDate(dateString As String) As Boolean
         ' Check format jj/mm/aaaa

@@ -1,34 +1,34 @@
-ï»¿Imports System.IO
+Imports System.IO
 
-Public Class Planning
-    Private ReadOnly filePath As String = Path.Combine(Application.StartupPath, "..", "..", "..", "plannings.txt")
+Public Class AbonnementsPaiements
+    Private ReadOnly filePath As String = Path.Combine(Application.StartupPath, "..", "..", "..", "abonnements.txt")
 
-    Private Sub Planning_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub AbonnementsPaiements_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         DataGridView1.MultiSelect = False
 
         ' Create file if it doesn't exist
         If Not File.Exists(filePath) Then
-            CreateDefaultPlanningFile()
+            CreateDefaultAbonnementsFile()
         End If
 
-        LoadPlanningData()
+        LoadAbonnementsData()
     End Sub
 
-    Private Sub CreateDefaultPlanningFile()
+    Private Sub CreateDefaultAbonnementsFile()
         Dim defaultContent As New List(Of String) From {
-            "Jour,Horaire,Activite,Coach,Duree,Capacite,Inscrits,Statut"
+            "Membre,TypeAbonnement,DateDebut,DateFin,Montant,DatePaiement,ModePaiement,Statut"
         }
         File.WriteAllLines(filePath, defaultContent)
     End Sub
 
-    Private Sub LoadPlanningData()
+    Private Sub LoadAbonnementsData()
         Try
             Dim dt As New DataTable()
             Dim lines() As String = File.ReadAllLines(filePath)
 
             If lines.Length = 0 Then
-                MessageBox.Show("Le fichier plannings est vide!")
+                MessageBox.Show("Le fichier abonnements est vide!")
                 Return
             End If
 
@@ -83,51 +83,57 @@ Public Class Planning
             ' Color code status
             If columnName = "statut" AndAlso e.Value IsNot Nothing Then
                 Dim statut As String = e.Value.ToString().Trim().ToLower()
-                If statut = "ouvert" Then
+                If statut = "paye" Then
                     e.CellStyle.BackColor = Color.FromArgb(34, 139, 34)
                     e.CellStyle.ForeColor = Color.White
                     e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
-                ElseIf statut = "complet" Then
-                    e.CellStyle.BackColor = Color.FromArgb(255, 140, 0)
+                ElseIf statut = "impaye" Then
+                    e.CellStyle.BackColor = Color.FromArgb(220, 20, 60)
                     e.CellStyle.ForeColor = Color.White
                     e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
-                ElseIf statut = "annule" Then
-                    e.CellStyle.BackColor = Color.FromArgb(220, 20, 60)
+                ElseIf statut = "expire" Then
+                    e.CellStyle.BackColor = Color.FromArgb(255, 140, 0)
                     e.CellStyle.ForeColor = Color.White
                     e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
                 End If
             End If
 
-            ' Highlight capacity warnings
-            If DataGridView1.Rows(e.RowIndex).Cells.Count > 0 Then
-                Dim capaciteCol As Integer = -1
-                Dim inscritsCol As Integer = -1
+            ' Color code subscription type - Annuel subscriptions in gold
+            If columnName = "typeabonnement" AndAlso e.Value IsNot Nothing Then
+                Dim typeAbo As String = e.Value.ToString().Trim().ToLower()
+                If typeAbo.Contains("annuel") Then
+                    e.CellStyle.ForeColor = Color.Gold
+                    e.CellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
+                ElseIf typeAbo.Contains("mensuel") Then
+                    e.CellStyle.ForeColor = Color.LightBlue
+                End If
+            End If
 
-                For i As Integer = 0 To DataGridView1.Columns.Count - 1
-                    If DataGridView1.Columns(i).HeaderText.ToLower() = "capacite" Then capaciteCol = i
-                    If DataGridView1.Columns(i).HeaderText.ToLower() = "inscrits" Then inscritsCol = i
-                Next
+            ' Highlight payment dates
+            If columnName.Contains("date") AndAlso e.Value IsNot Nothing Then
+                Dim dateValue As String = e.Value.ToString().Trim()
+                If Not String.IsNullOrEmpty(dateValue) Then
+                    Try
+                        ' Parse date if it's in dd/MM/yyyy format
+                        Dim parts() As String = dateValue.Split("/"c)
+                        If parts.Length = 3 Then
+                            Dim testDate As New Date(Integer.Parse(parts(2)), Integer.Parse(parts(1)), Integer.Parse(parts(0)))
 
-                If capaciteCol >= 0 AndAlso inscritsCol >= 0 Then
-                    Dim capaciteVal = DataGridView1.Rows(e.RowIndex).Cells(capaciteCol).Value
-                    Dim inscritsVal = DataGridView1.Rows(e.RowIndex).Cells(inscritsCol).Value
-
-                    If capaciteVal IsNot Nothing AndAlso inscritsVal IsNot Nothing Then
-                        Dim capacite As Integer
-                        Dim inscrits As Integer
-                        If Integer.TryParse(capaciteVal.ToString(), capacite) AndAlso Integer.TryParse(inscritsVal.ToString(), inscrits) Then
-                            If inscrits >= capacite AndAlso (columnName = "inscrits" OrElse columnName = "capacite") Then
-                                e.CellStyle.BackColor = Color.FromArgb(255, 69, 0)
+                            ' Check if date is in the past (for DateFin)
+                            If columnName = "datefin" AndAlso testDate < Date.Today Then
+                                e.CellStyle.ForeColor = Color.OrangeRed
                             End If
                         End If
-                    End If
+                    Catch ex As Exception
+                        ' Ignore parsing errors
+                    End Try
                 End If
             End If
         End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        ' Add new planning
+        ' Add new subscription
         Try
             Dim dt As DataTable = CType(DataGridView1.DataSource, DataTable)
             Dim newValues As New List(Of String)
@@ -137,24 +143,24 @@ Public Class Planning
                 Dim prompt As String = $"Entrez {column.ColumnName}:"
 
                 Select Case column.ColumnName.ToLower()
-                    Case "jour"
-                        prompt &= vbCrLf & "(Ex: Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche)"
-                    Case "horaire"
-                        prompt &= vbCrLf & "(Ex: 08:00-09:00)"
-                    Case "activite"
-                        prompt &= vbCrLf & "(Ex: Yoga, Musculation, Cardio, CrossFit, Pilates)"
-                    Case "duree"
-                        prompt &= vbCrLf & "(En minutes, ex: 60)"
-                    Case "capacite", "inscrits"
-                        prompt &= vbCrLf & "(Nombre de personnes)"
+                    Case "membre"
+                        prompt &= vbCrLf & "(Nom complet du membre)"
+                    Case "typeabonnement"
+                        prompt &= vbCrLf & "(Mensuel/Trimestriel/Annuel)"
+                    Case "datedebut", "datefin", "datepaiement"
+                        prompt &= vbCrLf & "(Format: jj/mm/aaaa)"
+                    Case "montant"
+                        prompt &= vbCrLf & "(Montant en DT)"
+                    Case "modepaiement"
+                        prompt &= vbCrLf & "(Espèces/Carte/Virement/Chèque)"
                     Case "statut"
-                        prompt &= vbCrLf & "(Ouvert/Complet/Annule)"
+                        prompt &= vbCrLf & "(Paye/Impaye/Expire)"
                 End Select
 
-                input = InputBox(prompt, "Nouveau Planning")
+                input = InputBox(prompt, "Nouvel Abonnement")
 
                 If String.IsNullOrEmpty(input) Then
-                    MessageBox.Show("Ajout annulÃ©!")
+                    MessageBox.Show("Ajout annulé!")
                     Return
                 End If
 
@@ -163,7 +169,7 @@ Public Class Planning
 
             dt.Rows.Add(newValues.ToArray())
             SaveDataToFile(dt)
-            MessageBox.Show("Planning ajoutÃ© avec succÃ¨s!")
+            MessageBox.Show("Abonnement ajouté avec succès!")
             DataGridView1.Refresh()
 
         Catch ex As Exception
@@ -172,13 +178,13 @@ Public Class Planning
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        ' Delete planning
+        ' Delete subscription
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("SÃ©lectionnez le planning Ã  supprimer")
+            MessageBox.Show("Sélectionnez l'abonnement à supprimer")
             Return
         End If
 
-        Dim result As DialogResult = MessageBox.Show("ÃŠtes-vous sÃ»r de vouloir supprimer ce planning?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim result As DialogResult = MessageBox.Show("Êtes-vous sûr de vouloir supprimer cet abonnement?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
             Try
@@ -186,7 +192,7 @@ Public Class Planning
                 Dim selectedIndex As Integer = DataGridView1.SelectedRows(0).Index
                 dt.Rows(selectedIndex).Delete()
                 SaveDataToFile(dt)
-                MessageBox.Show("Planning supprimÃ©!")
+                MessageBox.Show("Abonnement supprimé!")
             Catch ex As Exception
                 MessageBox.Show("Erreur : " & ex.Message)
             End Try
@@ -198,16 +204,16 @@ Public Class Planning
         Try
             Dim dt As DataTable = CType(DataGridView1.DataSource, DataTable)
             SaveDataToFile(dt)
-            MessageBox.Show("Modifications enregistrÃ©es avec succÃ¨s!")
+            MessageBox.Show("Modifications enregistrées avec succès!")
         Catch ex As Exception
             MessageBox.Show("Erreur lors de l'enregistrement : " & ex.Message)
         End Try
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        ' Ouvert button - Change status to Ouvert
+        ' Payé button - Change status to Payé
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("SÃ©lectionnez le planning Ã  modifier")
+            MessageBox.Show("Sélectionnez l'abonnement à modifier")
             Return
         End If
 
@@ -225,8 +231,8 @@ Public Class Planning
             Next
 
             If statutColumnIndex >= 0 Then
-                ' Change status to Ouvert
-                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Ouvert"
+                ' Change status to Payé
+                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Paye"
 
                 ' Save to file
                 SaveDataToFile(dt)
@@ -234,7 +240,7 @@ Public Class Planning
                 ' Refresh the display to update colors
                 DataGridView1.Refresh()
 
-                MessageBox.Show("Statut changÃ© Ã  Ouvert!")
+                MessageBox.Show("Statut changé à Payé!")
             Else
                 MessageBox.Show("Colonne Statut introuvable!")
             End If
@@ -244,9 +250,9 @@ Public Class Planning
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        ' AnnulÃ© button - Change status to AnnulÃ©
+        ' Impayé button - Change status to Impayé
         If DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("SÃ©lectionnez le planning Ã  modifier")
+            MessageBox.Show("Sélectionnez l'abonnement à modifier")
             Return
         End If
 
@@ -264,8 +270,8 @@ Public Class Planning
             Next
 
             If statutColumnIndex >= 0 Then
-                ' Change status to AnnulÃ©
-                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Annule"
+                ' Change status to Impayé
+                dt.Rows(selectedRowIndex)(statutColumnIndex) = "Impaye"
 
                 ' Save to file
                 SaveDataToFile(dt)
@@ -273,7 +279,7 @@ Public Class Planning
                 ' Refresh the display to update colors
                 DataGridView1.Refresh()
 
-                MessageBox.Show("Statut changÃ© Ã  AnnulÃ©!")
+                MessageBox.Show("Statut changé à Impayé!")
             Else
                 MessageBox.Show("Colonne Statut introuvable!")
             End If

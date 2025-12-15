@@ -67,7 +67,7 @@ Partial Class Form1
         Label1.BackColor = Color.Transparent
         Label1.Font = New Font("Bahnschrift Condensed", 36F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = Color.Gold
-        Label1.Location = New Point(292, 11)
+        Label1.Location = New Point(319, 9)
         Label1.Margin = New Padding(2, 0, 2, 0)
         Label1.Name = "Label1"
         Label1.Size = New Size(373, 58)
@@ -251,7 +251,7 @@ Partial Class Form1
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.Black
         BackgroundImage = My.Resources.Resources._834264
-        BackgroundImageLayout = ImageLayout.Zoom
+        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(967, 418)
         Controls.Add(PictureBox6)
         Controls.Add(Button6)
